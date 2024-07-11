@@ -26,12 +26,9 @@ def get_odomInfo():
 
     odom_info_msg = OdomInfo()
     
-    # Rellenar los campos necesarios
-    # odom_info_msg.header = Header()
     odom_info_msg.header.stamp = rospy.Time.now()
     odom_info_msg.header.frame_id = "odom"
 
-    # Ejemplo de datos (debes ajustar esto a tu configuración y datos reales)
     odom_info_msg.lost = False
     odom_info_msg.matches = 100
     odom_info_msg.inliers = 80
@@ -197,42 +194,46 @@ def get_odom(tf_broadcaster):
 
 
 def publishReadTopics():
+    # Se definen los publicadores para los diferentes tópicos de ROS
     rgb_pub = rospy.Publisher('/airsim/image_raw', Image, queue_size=10)
     depth_pub = rospy.Publisher('/airsim/depth', Image, queue_size=10)
     info_pub = rospy.Publisher('/airsim/camera_info', CameraInfo, queue_size=10)  # Publicador para CameraInfo
     odom_pub = rospy.Publisher('/airsim/odom', Odometry, queue_size=10)
     odomInfo_pub = rospy.Publisher('/airsim/odom_info', OdomInfo, queue_size=10)
-    tf_broadcaster = tf2_ros.TransformBroadcaster()
-
-    bridge = CvBridge()
+    tf_broadcaster = tf2_ros.TransformBroadcaster()  # Inicializa un objeto para transmitir transformaciones
     
-    info_message = get_cameraInfo()
-
-    rate = rospy.Rate(10)  # Publicar a 10Hz
-
-    # br = tf.TransformBroadcaster()
+    bridge = CvBridge()  # Se crea una instancia de CvBridge para convertir imágenes
+    
+    info_message = get_cameraInfo()  # Obtiene la información de la cámara
+    
+    rate = rospy.Rate(10)  # Configura la tasa de publicación a 10 Hz
     
     while not rospy.is_shutdown():
     
+        # Captura imágenes RGB y de profundidad, y obtiene los datos de odometría y odometría adicional
         rgb_message, depth_message = get_image(bridge)
         odom = get_odom(tf_broadcaster)
         odom_info_msg = get_odomInfo()
         
         # publish_tf(br)
-        
-        current_time = rospy.Time.now()
+        # La función para publicar las transformaciones está comentada porque no se está utilizando actualmente. 
+
+        current_time = rospy.Time.now()  # Obtiene el tiempo actual para las cabeceras de los mensajes
+
+        # Asigna el tiempo actual a las cabeceras de los mensajes
         rgb_message.header.stamp = current_time
         depth_message.header.stamp = current_time
         info_message.header.stamp = current_time
-        # odom_info_msg.header.stamp = current_time
 
+        # Publica los mensajes en los tópicos correspondientes
         rgb_pub.publish(rgb_message)
         depth_pub.publish(depth_message)
         odom_pub.publish(odom)
         info_pub.publish(info_message)
         odomInfo_pub.publish(odom_info_msg)
 
-        rate.sleep()
+        rate.sleep()  # Espera hasta el siguiente ciclo de publicación
+
 
 def initTopics():
     global client 
