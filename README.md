@@ -116,7 +116,7 @@ Dentro de la carpeta de [scripts](https://github.com/Manuelo247/RTAB-map_airsim/
 
 Los **códigos importantes** que se usan en la ejecución del proyecto se encuentran en [src/drone_slam_simulation](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/src/drone_slam_simulation).
 
-En la carpeta de [launch](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/launch) se encuentra el archivo para **ejecutar** los componentes necesarios para el proyecto.
+En la carpeta de [launch](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/launch) se encuentra el archivo para **ejecutar** los componentes necesarios para el proyecto, puedes encontrar como ejecutarlo en [Ejecutar el Launcher del Proyecto](#ejecutar-el-launcher-del-proyecto).
 
 Recuerda **instalar las librerías** necesarias para `rviz`, `rtabmap` y demás para que el proyecto funcione correctamente.
 
