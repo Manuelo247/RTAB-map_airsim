@@ -128,8 +128,6 @@ Aquí tienes una visualización rápida de los archivos imprescindibles del proy
 drone_slam_simulation
 ├── CMakeLists.txt
 ├── README.md
-├── config
-│   └── rtabmap_default.yaml
 ├── launch
 │   └── rtabmap_airsim.launch
 ├── package.xml
