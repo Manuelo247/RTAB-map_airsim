@@ -15,7 +15,7 @@ from cv_bridge import CvBridge
 import os
 import sys
 
-os.chdir('/home/manuelo247/catkin_ws/src/drone_slam_simulation/src/drone_slam_simulation')
+
 try:
     from drone_slam_simulation.connect_API_src import connectAPI
 except ImportError as e:

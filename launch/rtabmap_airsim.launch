@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="rtabmap_slam" type="rtabmap" name="rtabmap" output="screen">
+  <!-- <node pkg="rtabmap_slam" type="rtabmap" name="rtabmap" output="screen">
   <param name="subscribe_rgb" value="true"/>
   <param name="subscribe_depth" value="true"/>
   <param name="subscribe_odom_info" value="true"/>
@@ -17,9 +17,9 @@
     <remap from="/odom" to="/airsim/odom"/>
     <param name="sync_queue_size" value="50"/>
     <param name="topic_queue_size" value="50"/>
-  </node>
+  </node>-->
 
-  <node pkg="rviz" type="rviz" name="rviz" output="screen"/>
+  <node pkg="rviz" type="rviz" name="rviz" output="screen"/> 
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph" required="false"/>
 

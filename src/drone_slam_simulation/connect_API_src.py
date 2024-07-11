@@ -5,40 +5,35 @@ import rospy
 import configparser
 import os
 
-
 def readConfig():
-    # Leer el archivo config.ini
+    # Leer IP y puerto del archivo de configuración
     config = configparser.ConfigParser()
     config.read('/home/manuelo247/catkin_ws/src/drone_slam_simulation/scripts/config.ini')
-
-    # Obtener los valores de IP y puerto
+    
     ip = config['airsim']['ip']
-    ip = os.path.expandvars(ip)
+    ip = os.path.expandvars(ip)  # Expandir variables de entorno en IP
     port = int(config['airsim']['port'])
-
+    
     return ip, port
-    # Crear un cliente para conectar con el simulador
 
 def connectClient():
-    global client
-    ip, port = readConfig()
-    client = airsim.MultirotorClient(ip=ip, port=port)
-    # client.confirmConnection()
+    global client  # Variable global para el cliente de AirSim
+    ip, port = readConfig()  # Obtener IP y puerto
     
+    client = airsim.MultirotorClient(ip=ip, port=port)  # Conectar con AirSim
+
 def connectAPI():
-    connectClient()
-    # Habilitar el control de la API
-    client.enableApiControl(True)
-    client.armDisarm(True)
+    connectClient()  # Conectar al simulador
     
-    return client
+    client.enableApiControl(True)  # Habilitar control de la API
+    client.armDisarm(True)  # Armar el dron
     
+    return client  # Retornar el cliente
+
 def disconnectAPI():
-    #Deshabilitar el control de la API
-    client.armDisarm(False)
-    client.enableApiControl(False)
-    
-    
+    client.armDisarm(False)  # Desarmar el dron
+    client.enableApiControl(False)  # Deshabilitar control de la API
+
 if __name__ == '__main__':
-    rospy.init_node('drone_connection_node', anonymous=True)
-    connectAPI()
+    rospy.init_node('drone_connection_node', anonymous=True)  # Inicializar nodo de ROS
+    connectAPI()  # Conectar a la API del simulador

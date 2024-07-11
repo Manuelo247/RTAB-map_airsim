@@ -5,9 +5,7 @@ import rospy
 
 import signal
 import sys
-import os
 
-os.chdir('/home/manuelo247/catkin_ws/src/drone_slam_simulation/src/drone_slam_simulation')
 try:
     from drone_slam_simulation.connect_API_src import connectAPI
 except ImportError as e:
