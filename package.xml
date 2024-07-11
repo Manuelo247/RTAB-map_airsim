@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>drone_slam_simulation</name>
+  <version>0.0.0</version>
+  <description>The drone_slam_simulation package</description>
+  <maintainer email="Manuel8a31@hotmail.com">manuelo247</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>rtabmap_ros</build_depend>
+
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>rtabmap_ros</exec_depend>
+  
+  <export>
+  </export>
+</package>
