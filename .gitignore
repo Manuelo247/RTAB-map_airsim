@@ -1,0 +1,38 @@
+# Ignorar directorios y archivos generados
+build/
+devel/
+
+# Ignorar cachés y archivos temporales
+*.pyc
+__pycache__/
+*.npy
+*.png
+
+# Ignorar todo en scripts excepto los archivos especificados
+/scripts/*
+!/scripts/airsim_wrapper.py
+!/scripts/basic connection.py
+!/scripts/basic_connection_ngrok.py
+!/scripts/config.ini
+!/scripts/contenedor_SLAM.py
+!/scripts/depth_image.npy
+!/scripts/execute_bash.sh
+!/scripts/image.png
+!/scripts/tempCodeRunnerFile.py
+!/scripts/test.py
+!/scripts/test_airsim.py
+!/scripts/test_socket.py
+!/scripts/time real control.py
+
+# Ignorar todo en src/drone_slam_simulation excepto los archivos especificados
+/src/drone_slam_simulation/*
+!/src/drone_slam_simulation/__init__.py
+!/src/drone_slam_simulation/connect_API_src.py
+!/src/drone_slam_simulation/move_dron.py
+!/src/drone_slam_simulation/publish_topics.py
+
+# Ignorar archivos específicos del sistema y de entorno de desarrollo
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
