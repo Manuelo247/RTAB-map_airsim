@@ -27,8 +27,6 @@ def connectAPI():
     
     client.enableApiControl(True)  # Habilitar control de la API
     client.armDisarm(True)  # Armar el dron
-    
-    return client  # Retornar el cliente
 
 def disconnectAPI():
     client.armDisarm(False)  # Desarmar el dron
