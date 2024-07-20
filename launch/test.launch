@@ -1,0 +1,14 @@
+<launch>
+  <arg name="example_arg" default="true" />
+  <arg name="example_arg2" default="true" />
+
+  <param name="example_param" value="$(arg example_arg)" />
+  <rosparam command="load" file="$(find drone_slam_simulation)/config/params.yaml"/>
+
+  <!-- <param name="ip" value="sobre-escrito" /> -->
+
+  <!-- Puedes usar un nodo para hacer algo basado en el valor del parámetro -->
+  <node pkg="drone_slam_simulation" type="print_args.py" name="print_args" output="screen" if="$(eval arg('example_arg') == true and arg('example_arg2') == true)">
+    <param name="example_param2" value="$(arg example_arg2)"/>
+  </node>
+</launch>

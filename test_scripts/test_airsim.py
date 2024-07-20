@@ -1,5 +1,4 @@
 import airsim
-import numpy as np
 import os
 import configparser
 

@@ -1,25 +1,18 @@
 #!/usr/bin/env python3
-
-import airsim
-
-import numpy as np
 import rospy
 
 from rtabmap_msgs.msg import OdomInfo
 from sensor_msgs.msg import Image, CameraInfo  # Asegúrate de importar CameraInfo
 from nav_msgs.msg import Odometry
-from geometry_msgs.msg import Transform, TransformStamped
 import tf
 
 from cv_bridge import CvBridge
-import os
 import signal
 import sys
 
-
 try:
-    from drone_slam_simulation.connect_API_src import connectAPI
-    from drone_slam_simulation.topics import get_cameraInfo, get_image, get_odom, get_odomInfo, init_varibles
+    from drone_slam_simulation.connect_api import connectAPI
+    from drone_slam_simulation.get_topics import get_cameraInfo, get_image, get_odom, get_odomInfo, init_varibles
 except ImportError as e:
     rospy.logerr(f"ImportError: {e}")
     sys.exit(1)
@@ -31,32 +24,11 @@ def signal_handler(sig, frame):
 # Registrar el manejador de señales para la interrupción (Ctrl+C)
 signal.signal(signal.SIGINT, signal_handler)
 
-
-
-# def publish_tf(br):
-#     # Publicar transformaciones desde `odom` a `base_link`
-#     br.sendTransform(
-#         (0, 0, 0),  # La posición en `odom`
-#         (0, 0, 0, 1),  # La orientación en `odom`
-#         rospy.Time.now(),  # El tiempo actual
-#         "base_link",  # El `child_frame_id`
-#         "odom"  # El `parent_frame_id`
-#     )
-#     # Publicar transformaciones desde `camera_link` a `base_link`
-#     br.sendTransform(
-#         (0, 0, 0),  # La posición en `camera_link`
-#         (0, 0, 0, 1),  # La orientación en `camera_link`
-#         rospy.Time.now(),  # El tiempo actual
-#         "camera_link",  # El `child_frame_id`
-#         "base_link"  # El `parent_frame_id`
-#     )
-
-
 def publishReadTopics():
     # Se definen los publicadores para los diferentes tópicos de ROS
-    rgb_pub = rospy.Publisher('/airsim/image_raw', Image, queue_size=10)
-    depth_pub = rospy.Publisher('/airsim/depth', Image, queue_size=10)
-    info_pub = rospy.Publisher('/airsim/camera_info', CameraInfo, queue_size=10)  # Publicador para CameraInfo
+    rgb_pub = rospy.Publisher('/airsim/image/rgb', Image, queue_size=10)
+    depth_pub = rospy.Publisher('/airsim/image/depth', Image, queue_size=10)
+    info_pub = rospy.Publisher('/airsim/image/camera_info', CameraInfo, queue_size=10)  # Publicador para CameraInfo
     odom_pub = rospy.Publisher('/airsim/odom', Odometry, queue_size=10)
     odomInfo_pub = rospy.Publisher('/airsim/odom_info', OdomInfo, queue_size=10)
     
@@ -70,26 +42,31 @@ def publishReadTopics():
     while not rospy.is_shutdown():
         # Captura imágenes RGB y de profundidad, y obtiene los datos de odometría y odometría adicional
         rgb_message, depth_message, size = get_image()
-        info_message = get_cameraInfo(size)
-        odom = get_odom()
-        odom_info_msg = get_odomInfo()
+        info_camera_message = get_cameraInfo(size)
+        odom_message = get_odom()
+        odom_info_message = get_odomInfo()
 
         current_time = rospy.Time.now()  # Obtiene el tiempo actual para las cabeceras de los mensajes
 
         # Asigna el tiempo actual a las cabeceras de los mensajes
-        rgb_message.header.stamp = current_time
         rgb_message.header.frame_id = "camera_link"  # Frame de la cámara
-        depth_message.header.stamp = current_time
+        rgb_message.header.stamp = current_time
         depth_message.header.frame_id = "camera_link"  # Frame de la cámara
-        info_message.header.stamp = current_time
-        info_message.header.frame_id = "camera_link"
+        depth_message.header.stamp = current_time
+        info_camera_message.header.frame_id = "camera_link"
+        info_camera_message.header.stamp = current_time
+        
+        odom_message.header.frame_id = "odom"
+        odom_message.header.stamp = current_time
+        odom_info_message.header.frame_id = "odom"
+        odom_info_message.header.stamp = current_time
 
         # Publica los mensajes en los tópicos correspondientes
         rgb_pub.publish(rgb_message)
         depth_pub.publish(depth_message)
-        info_pub.publish(info_message)
-        odom_pub.publish(odom)
-        odomInfo_pub.publish(odom_info_msg)
+        info_pub.publish(info_camera_message)
+        odom_pub.publish(odom_message)
+        odomInfo_pub.publish(odom_info_message)
 
         rate.sleep()  # Espera hasta el siguiente ciclo de publicación
 

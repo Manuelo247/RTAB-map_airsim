@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Este codigo sirve para verificar que tipo de imagen 
+# soporta una camara especifica regresada por airsim
+
 import airsim
 import rospy
 import configparser

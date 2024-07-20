@@ -1,7 +1,6 @@
 # Ignorar directorios y archivos generados
 build/
 devel/
-config/
 
 # Ignorar cachés y archivos temporales
 *.pyc
