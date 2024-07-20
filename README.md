@@ -1,7 +1,7 @@
 
-## Índice
+# Índice
 
-* [Comandos necesarios](#comandos-necesarios)
+* [Ejecucion del proyecto](#ejecucion-del-proyecto)
   * [Iniciar el ROS Master](#iniciar-el-ros-master)
   * [Configurar el Workspace](#configurar-el-workspace)
   * [Dar Permisos de Ejecución a un Archivo `.py`](#dar-permisos-de-ejecución-a-un-archivo-py)
@@ -16,7 +16,7 @@
 * [Aclaraciones](#aclaraciones)
 * [Árbol del proyecto](#árbol-del-proyecto)
 
-## Comandos necesarios
+# Ejecucion del proyecto
 
 A continuación se detallan los comandos y sus propósitos para trabajar con ROS en tu proyecto.
 
@@ -52,7 +52,7 @@ Da permisos de ejecución a tu archivo `airsim_image_publisher.py`.
 roslaunch drone_slam_simulation rtabmap_airsim.launch
 ```
 
-Ejecuta el proyecto, incluyendo el movimiento del dron, la publicación de datos, y la visualización en `rviz` y `RTAB-Map`. Asegúrate de haber ejecutado **roscore** previamente para que el ROS master esté en funcionamiento.
+Ejecuta el proyecto, incluyendo el movimiento del dron, la publicación de datos, y la visualización en `rviz` y `RTAB-Map`. Asegúrate de haber ejecutado **roscore** y haber seguido los pasos anteriores para que el proyecto funcione correctamente.
 
 ### Ejecutar RTAB-Map individualmente
 
@@ -84,35 +84,25 @@ Aquí mencionaré todos los cambios necesarios en caso de que quieras correr el 
 
 ## Conectar a la API
 
-Para conectar con la API de AirSim, encontrarás el archivo de [connect_API_src.py](https://github.com/Manuelo247/RTAB-map_airsim/blob/master/src/drone_slam_simulation/connect_API_src.py), que lee el archivo [config.ini](https://github.com/Manuelo247/RTAB-map_airsim/blob/master/scripts/config.ini). En este archivo, establecerás tu IP y puerto si quieres que sean personalizados.
-
-### Cambiar directorio
-
-Será necesario cambiar la ruta al archivo `config.ini` en tu computadora. Modifica la línea en `connect_API_src.py` de:
-
-```python
-12    config.read('/home/manuelo247/catkin_ws/src/drone_slam_simulation/scripts/config.ini')
-```
-
-a la ruta donde se encuentre `config.ini` en tu computadora.
+Para conectar con la API de AirSim, encontrarás el archivo de [connect_api.py](https://github.com/Manuelo247/RTAB-map_airsim/blob/master/src/drone_slam_simulation/connect_api.py), que lee los parametros del [launch](https://github.com/Manuelo247/RTAB-map_airsim/blob/master/launch/rtabmap_airsim.launch), los cuales se los proporcionamos desde el archivo [params.yamls](https://github.com/Manuelo247/RTAB-map_airsim/blob/master/config/params.yaml). En este archivo, establecerás tu IP y puerto si quieres que sean personalizados.
 
 ### Usar IP y puerto por defecto
 
-Si no deseas establecer una IP y puerto personalizados, cambia la línea en `airsim_wrapper.py` de:
+Si no deseas establecer una IP y puerto personalizados, cambia la línea en `connect_api.py` de:
 
 ```python
-25    client = airsim.MultirotorClient(ip=ip, port=port)
+16    client = airsim.MultirotorClient(ip=ip, port=port)
 ```
 
 a:
 
 ```python
-25    client = airsim.MultirotorClient()
+16    client = airsim.MultirotorClient()
 ```
 
 ## Aclaraciones
 
-Dentro de la carpeta de [scripts](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/scripts) encontrarás únicamente scripts utilizados para el testeo del proyecto, además del `config.ini` en caso de querer usar una IP y puerto personalizados para la conexión con la API.
+Dentro de la carpeta de [test_scripts](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/test_scripts) encontrarás únicamente scripts utilizados para el testeo del proyecto.
 
 Los **códigos importantes** que se usan en la ejecución del proyecto se encuentran en [src/drone_slam_simulation](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/src/drone_slam_simulation).
 
