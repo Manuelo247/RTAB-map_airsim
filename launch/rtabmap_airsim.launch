@@ -1,29 +1,45 @@
 <launch>
-  <node pkg="rtabmap_slam" type="rtabmap" name="rtabmap" output="screen">
-  <param name="subscribe_rgb" value="true"/>
-  <param name="subscribe_depth" value="true"/>
-  <param name="subscribe_odom_info" value="true"/>
-  <remap from="/rgb/camera_info" to="/airsim/camera_info"/>
-  <remap from="/odom_info" to="/airsim/odom_info"/>
-  <remap from="/odom" to="/airsim/odom"/>
-  <remap from="/depth/image" to="/airsim/depth"/>
-  <remap from="/rgb/image" to="/airsim/image_raw"/>
-  <param name="sync_queue_size" value="100"/>
-  <param name="topic_queue_size" value="100"/>
+  
+  <arg name="rviz" default="true" />
+  <arg name="rtabmap" default="true" />
+  <arg name="gnome" default="false" />
+
+  <arg unless="$(arg gnome)" name="gnome_terminal" default=""/>
+  <arg if="$(arg gnome)" name="gnome_terminal" default="gnome-terminal -- bash -c "/>
+  
+  <node if="$(arg rtabmap)" pkg="rtabmap_slam" type="rtabmap" name="rtabmap" output="screen"  args="--delete_db_on_start udebug">
+    <param name="frame_id" type="string" value="base_link"/>
+
+    <!-- <param name="subscribe_rgbd" value="true"/> -->
+    <param name="subscribe_rgb" value="true"/>
+    <param name="subscribe_depth" value="true"/>
+    <param name="subscribe_odom" value="true"/>
+
+    <remap from="/rgb/camera_info" to="/airsim/camera_info"/>
+    <remap from="/odom_info" to="/airsim/odom_info"/>
+    <remap from="/odom" to="/airsim/odom"/> 
+    <remap from="/depth/image" to="/airsim/depth"/>
+    <remap from="/rgb/image" to="/airsim/image_raw"/>
+
+    <param name="gdb" value="true"/>
+    <param name="StatisticLogged" value="true"/>
+    <param name="approx_sync" value="true"/>
+    <param name="sync_queue_size" value="100"/>
+    <param name="topic_queue_size" value="100"/>
   </node>
 
-  
-  <node pkg="rtabmap_viz" type="rtabmap_viz" name="rtabmap_viz" output="screen">
+  <!-- <node if="$(arg rtabmap)" pkg="rtabmap_viz" type="rtabmap_viz" name="rtabmap_viz" output="screen">
     <remap from="/odom" to="/airsim/odom"/>
+    <param name="frame_id" value="camera_link"/>
     <param name="sync_queue_size" value="50"/>
     <param name="topic_queue_size" value="50"/>
-  </node>
+  </node> -->
 
-  <node pkg="rviz" type="rviz" name="rviz" output="screen"/> 
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" output="screen" args="-d $(find drone_slam_simulation)/config/topics.rviz"/>
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph" required="false"/>
 
-  <node pkg="drone_slam_simulation" type="move_dron.py" name="move_dron" output="screen"/>
-  <node pkg="drone_slam_simulation" type="publish_topics.py" name="publish_topics" output="screen"/>
+  <node pkg="drone_slam_simulation" type="move_dron.py" name="move_dron" output="screen" launch-prefix="$(arg gnome_terminal)"/>
+  <node pkg="drone_slam_simulation" type="publish_topics.py" name="publish_topics" output="screen" launch-prefix="$(arg gnome_terminal)"/>
   
 </launch>

@@ -28,7 +28,7 @@ def loopMove():
     while True:
         # Mover a la primera posición
         yaw_mode = airsim.YawMode(is_rate=False, yaw_or_rate=0)
-        client.moveToPositionAsync(10, 0, -10, 5, yaw_mode=yaw_mode).join()
+        client.moveToPositionAsync(20, 0, -10, 5, yaw_mode=yaw_mode).join()
         airsim.time.sleep(1)  # Pausar para verificar el movimiento
 
         # Mover a la segunda posición
@@ -56,3 +56,7 @@ def initMove():
         if client:
             client.armDisarm(False)  # Desarmar el dron
             client.enableApiControl(False)  # Deshabilitar el contro
+
+if __name__ == '__main__':
+    rospy.init_node('drone_movement_node', anonymous=True)  # Inicializar nodo de ROS
+    initMove()  # Conectar a la API del simulador
