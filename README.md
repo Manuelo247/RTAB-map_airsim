@@ -41,10 +41,10 @@ Inicializa y actualiza tu workspace en `~/catkin_ws` (O el nombre de tu workspac
 ### Dar Permisos de Ejecución a un Archivo `.py`
 
 ```bash
-chmod +x ~/catkin_ws/src/drone_slam_simulation/scripts/airsim_image_publisher.py
+chmod +x ~/catkin_ws/drone_slam_simulation/src/drone_slam_simulation/connect_api.py
 ```
 
-Da permisos de ejecución a tu archivo `airsim_image_publisher.py`.
+Da permisos de ejecución a los archivos python de tu proyecto para que ROS pueda detectarlos, cambia `connect_api.py` po el nombre de cada uno de ellos.
 
 ### Ejecutar el launcher del proyecto
 
@@ -102,6 +102,8 @@ a:
 
 ## Aclaraciones
 
+Este repositorio es un paquete de ROS, por lo tanto debera de estar dentro de tu workspace de ROS llamado 'catkin_ws' (O el nombre que tu le hayas establecido) con el nombre de 'drone_slam_simulation' en lugar de 'RTAB-map_airsim'
+
 Dentro de la carpeta de [test_scripts](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/test_scripts) encontrarás únicamente scripts utilizados para el testeo del proyecto.
 
 Los **códigos importantes** que se usan en la ejecución del proyecto se encuentran en [src/drone_slam_simulation](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/src/drone_slam_simulation).
@@ -118,14 +120,20 @@ Aquí tienes una visualización rápida de los archivos imprescindibles del proy
 drone_slam_simulation
 ├── CMakeLists.txt
 ├── README.md
-├── launch
+├──config
+│   └── config.ini
+│   └── params.yaml
+│   └── topics.rviz
+├──docs
+│   └── commands.md
+│   └── error_history.md
+├──launch
 │   └── rtabmap_airsim.launch
 ├── package.xml
-├── scripts
+├── test_scripts
 │   ├── airsim_wrapper.py
 │   ├── basic_connection.py
 │   ├── basic_connection_ngrok.py
-│   ├── config.ini
 │   ├── contenedor_SLAM.py
 │   ├── execute_bash.sh
 │   ├── tempCodeRunnerFile.py
