@@ -102,7 +102,7 @@ a:
 
 ## Aclaraciones
 
-Este repositorio es un paquete de ROS, por lo tanto debera de estar dentro de tu workspace de ROS llamado 'catkin_ws' (O el nombre que tu le hayas establecido) con el nombre de 'drone_slam_simulation' en lugar de 'RTAB-map_airsim'
+Este repositorio es un paquete de ROS, por lo tanto debera de estar en tu carpeta '/src' dentro de tu workspace de ROS llamado 'catkin_ws' (O el nombre que tu le hayas establecido) con el nombre de 'drone_slam_simulation' en lugar de 'RTAB-map_airsim'
 
 Dentro de la carpeta de [test_scripts](https://github.com/Manuelo247/RTAB-map_airsim/tree/master/test_scripts) encontrarás únicamente scripts utilizados para el testeo del proyecto.
 
