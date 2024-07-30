@@ -41,7 +41,7 @@ Inicializa y actualiza tu workspace en `~/catkin_ws` (O el nombre de tu workspac
 ### Dar Permisos de Ejecución a un Archivo `.py`
 
 ```bash
-chmod +x ~/catkin_ws/drone_slam_simulation/src/drone_slam_simulation/connect_api.py
+chmod +x ~/catkin_ws/src/drone_slam_simulation/src/drone_slam_simulation/connect_api.py
 ```
 
 Da permisos de ejecución a los archivos python de tu proyecto para que ROS pueda detectarlos, cambia `connect_api.py` po el nombre de cada uno de ellos.
